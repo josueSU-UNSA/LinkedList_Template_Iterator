@@ -30,7 +30,10 @@ class Node{
             this->content=content;
         }
         //friend ostream& operator <<(ostream &salida1,const Node<G>& C);
-        
+        Node<T>* operator++(){
+            *this=*this->getNext();
+            return *this;
+        }
         friend ostream& operator <<(ostream &salida1,const Node<T>& C){
             salida1<<C.getContent();
             return salida1;
@@ -97,7 +100,6 @@ class LinkedList{
                 return auxiliarIterador;
             }
         }
-
         void insertBegin(G value){
             
             Node<G>*nuevoNodo=new Node<G>(value);
@@ -156,6 +158,7 @@ class LinkedList{
             salida1<<" ]";
             return salida1;
         }
+        
         ~LinkedList(){
             Node <G>*actual=nullptr;
             while (head!=nullptr)
@@ -167,6 +170,15 @@ class LinkedList{
             delete head;   
 
         }
+        
+        /*
+        ~LinkedList(){
+            for (Node<int>*i=this->begin();i!=nullptr; i=i->getNext()){
+                delete i;
+            } 
+            head=nullptr;
+        }
+        */
 };
 
 
@@ -182,46 +194,31 @@ int main(){
     lista.insertEnd(100);
     
     
-    //cout<<lista.getLongitud()<<endl;
     
-    cout<<lista<<endl;
     
-    //cout<<*lista.begin()<<endl;
-    //cout<<*lista.end()<<endl;
-    
-    cout<<lista<<endl;
-    
-    //cout<<"Sexto elemento"<<lista[5]<<endl;
-    cout<<"Probando la iteracion de direcciones"<<endl;
+    cout<<lista<<endl<<endl;
+    cout<<"Usando un for para iterar sobre la lista mediante indices"<<endl;
     for (int i=0;i<lista.getLongitud();i++){
         cout<<*lista[i]<<endl;
     }
-    cout<<"DEFINITVO"<<endl;
-   
+    cout<<endl<<endl;
+    cout<<"Usando un for para iterar sobre la lista mediante direcciones"<<endl;
+  
     for (Node<int>*i=lista.begin();i!=nullptr; i=i->getNext()){
         cout<<*i<<endl;
     }
-    cout<<"Aca termina"<<endl;
+    
+    
+    cout<<endl<<endl;
+    cout<<"Eliminacion del indice 5 de la lista"<<endl;
 
 
-    cout<<lista.getLongitud()<<endl;
+    
 
     lista.eliminar(5);
+    cout<<"Lista actualizada "<<endl;
     cout<<lista<<endl;
-    cout<<lista.getLongitud()<<endl;
-    /*
-    lista.~LinkedList();
-    cout<<"Esta es la lista despues de ser borrada "<<endl;
-    cout<<lista<<endl;
-    lista.insertBegin(7);
-    lista.insertBegin(15);
-    lista.insertEnd(9);
-    cout<<lista<<endl;
-    lista.eliminar(0);
-    cout<<lista<<endl;
-    */
-    //cout<<lista.getLongitud()<<endl;
-    
+    cout<<"Su nueva longitud seria"<<lista.getLongitud()<<endl;
     
 
     getch();
