@@ -86,7 +86,7 @@ class LinkedList{
                 return iterador;
             }
         }
-        G operator [](int pos){
+        Node <G>* operator [](int pos){
             int count=0;
             Node<G>*auxiliarIterador=head;
             if(pos<this->longitud){
@@ -94,7 +94,7 @@ class LinkedList{
                     auxiliarIterador=auxiliarIterador->getNext();
                     count++;
                 }
-                return auxiliarIterador->getContent();
+                return auxiliarIterador;
             }
         }
 
@@ -120,17 +120,26 @@ class LinkedList{
             }
             this->longitud++;
         }
-        
         void eliminar(int position){
             Node<G>*actual=this->head;
+            Node<G>*aux=nullptr;
+            int iterador=0;
             if(position<this->longitud){
                 if(position==0){
-                    delete head;
-                    head=actual;
+                    
+                    head=head->getNext();
+                    delete actual;
                 }
                 else{
-                    
+                    while(iterador<position){
+                        aux = actual; 
+                        actual = actual->getNext();
+                        iterador++;
+                    }
+                    aux -> setNext( actual->getNext());
+                    delete actual;   
                 }
+                this->longitud--;
             }
             else{
                 cout<<"No es posible borrar una posicion inexistente "<<endl;
@@ -147,10 +156,6 @@ class LinkedList{
             salida1<<" ]";
             return salida1;
         }
-            
-        
-
-
         ~LinkedList(){
             Node <G>*actual=nullptr;
             while (head!=nullptr)
@@ -180,13 +185,30 @@ int main(){
     //cout<<lista.getLongitud()<<endl;
     
     cout<<lista<<endl;
+    
     //cout<<*lista.begin()<<endl;
     //cout<<*lista.end()<<endl;
+    
     cout<<lista<<endl;
-    cout<<"Sexto elemento"<<lista[5]<<endl;
+    
+    //cout<<"Sexto elemento"<<lista[5]<<endl;
+    cout<<"Probando la iteracion de direcciones"<<endl;
     for (int i=0;i<lista.getLongitud();i++){
-        cout<<lista[i]<<endl;
+        cout<<*lista[i]<<endl;
     }
+    cout<<"DEFINITVO"<<endl;
+   
+    for (Node<int>*i=lista.begin();i!=nullptr; i=i->getNext()){
+        cout<<*i<<endl;
+    }
+    cout<<"Aca termina"<<endl;
+
+
+    cout<<lista.getLongitud()<<endl;
+
+    lista.eliminar(5);
+    cout<<lista<<endl;
+    cout<<lista.getLongitud()<<endl;
     /*
     lista.~LinkedList();
     cout<<"Esta es la lista despues de ser borrada "<<endl;
