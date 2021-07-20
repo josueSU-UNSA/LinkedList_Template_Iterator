@@ -25,7 +25,10 @@ class LinkedList{
         Node <G>* operator [](int pos);
         void insertBegin(G value);
         void insertEnd(G value);
+        void eliminarBegin();
+        void eliminarEnd();
         void eliminar(int position);
+        bool vacio();
         ~LinkedList();
 
         friend std::ostream& operator <<(std::ostream &salida1,LinkedList<G>& C){
@@ -161,6 +164,29 @@ void LinkedList<G>::insertEnd(G value){
     }
     this->longitud++;
 }
+template<typename G>
+void LinkedList<G>::eliminarBegin(){
+    Node<G>*aux=this->head->getNext();
+    delete head;
+    head=aux;
+    this->longitud--;
+}
+
+template<typename G>
+void LinkedList<G>::eliminarEnd(){
+    
+    Node<G>*auxNext=this->head;
+    Node<G>*aux=nullptr;
+    while(auxNext->getNext()!=nullptr){
+        aux=auxNext;
+        auxNext=auxNext->getNext();    
+    }
+
+    delete auxNext;
+    aux->setNext(nullptr);
+
+    this->longitud--;
+}
 
 template<typename G>
 void LinkedList<G>::eliminar(int position){
@@ -186,6 +212,11 @@ void LinkedList<G>::eliminar(int position){
     else{
         std::cout<<"No es posible borrar una posicion inexistente "<<std::endl;
         }
+}
+
+template<typename G>
+bool LinkedList<G>::vacio(){
+    return (this->head==nullptr);
 }
 
 template<typename G>
