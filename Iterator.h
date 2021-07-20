@@ -17,7 +17,7 @@ class Iterator{
 
         Iterator<I> operator =(const Iterator<I>&&o);
 
-        Iterator <I>&operator++();
+        Iterator <I>operator++(int);
         Iterator<I> operator +(int i);
         I operator*();
         bool operator!=(Node<I>*o);
@@ -67,7 +67,7 @@ Iterator<I> Iterator<I>::operator =(const Iterator<I>&&o){//asignacion de movimi
 }
 
 template<typename I>
-Iterator <I>& Iterator<I>::operator++(){
+Iterator <I>& Iterator<I>::operator++(int){
     this->iterador = this->iterador->getNext();
     return *this;
 }
