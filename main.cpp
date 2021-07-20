@@ -40,7 +40,7 @@ int main(){
     
     cout<<"Probando iterador "<<endl;
     Iterator<int> iterador;
-    for(iterador=lista.begin();iterador!=nullptr;++iterador){
+    for(iterador=lista.begin();iterador!=nullptr;iterador++){
         cout<<iterador;
     }
     cout<<"Aca termina de probarse el code"<<endl;
