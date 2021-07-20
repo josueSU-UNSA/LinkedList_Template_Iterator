@@ -1,5 +1,4 @@
 #include<iostream>
-#include<conio.h>
 #include "Iterator.h"
 using namespace std;
 int main(){
@@ -45,6 +44,5 @@ int main(){
         cout<<iterador;
     }
     cout<<"Aca termina de probarse el code"<<endl;
-    getch();
     return 0;
 }
