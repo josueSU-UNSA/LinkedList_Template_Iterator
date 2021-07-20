@@ -13,6 +13,10 @@ class Node{
             this->content=_content;
             this->next=nullptr;
         }
+        Node(){ 
+            this->content=0;
+            this->next=nullptr;
+        }
         
         Node <T>* getNext() const{
             return this->next;
@@ -30,10 +34,7 @@ class Node{
             this->content=content;
         }
         //friend ostream& operator <<(ostream &salida1,const Node<G>& C);
-        Node<T>* operator++(){
-            *this=*this->getNext();
-            return *this;
-        }
+        
         friend ostream& operator <<(ostream &salida1,const Node<T>& C){
             salida1<<C.getContent();
             return salida1;
@@ -66,7 +67,7 @@ class LinkedList{
         LinkedList(const LinkedList <G>&o){
             this->longitud=0;
             this->head=nullptr;
-            Node<G>*iterador=o.head();
+            Node<G>*iterador=o.head;
             while (iterador!=nullptr){
                 this->insertEnd(iterador->getContent());
                 iterador=iterador->getNext();
@@ -146,8 +147,7 @@ class LinkedList{
             else{
                 cout<<"No es posible borrar una posicion inexistente "<<endl;
             }
-            
-        }
+            }
         friend ostream& operator <<(ostream &salida1,LinkedList<G>& C){
             Node<G>* actual=C.getHead();
             salida1<<"[ ";
@@ -170,16 +170,58 @@ class LinkedList{
             delete head;   
 
         }
-        
-        /*
-        ~LinkedList(){
-            for (Node<int>*i=this->begin();i!=nullptr; i=i->getNext()){
-                delete i;
-            } 
-            head=nullptr;
-        }
-        */
 };
+    template<typename I>
+        class Iterator{
+            private:
+                Node<I>*iterador;
+            public:
+                Iterator(){     //constructor por defecto
+                    this->iterador=nullptr;
+                }
+                Iterator(Node<I> *o){//constructor q copia un objeto Node * a un objeto iterator
+                    this->iterador=o;
+                }
+                Iterator(const Iterator<I>&o){//constructor q copia un objeto Node * a un objeto iterator
+                    this->iterador=o.iterador;
+                }
+                Iterator operator =(Node<I>*o){//constructor de movimiento
+                    this->iterador=o;
+                    return *this;
+                }
+                Iterator operator =(const Iterator<I>&o){//constructor de movimiento
+                    this->iterador=o.iterador;
+                    return *this;
+                }
+                
+                Iterator<I> operator++(){
+                    this->iterador=this->iterador->getNext();   
+                    Iterator<I>aux(this->iterador);
+                    return aux;
+                }
+                
+                Iterator<I> operator +(int i){
+                    for(int j=0;j<i;j++){
+                       this->iterador=this->iterador->getNext();
+                    }
+                    Iterator <I>aux(this->iterador);
+                    return aux;  
+
+               }
+               
+                I operator*(){
+                    return this->iterador->getContent();
+                } 
+                
+                friend ostream& operator <<(ostream &salida1,Iterator<I>& i){
+                    salida1<<*i<<endl;
+                    return salida1;
+                }               
+                bool operator!=(Node<I>*o){
+                    return (this->iterador!=o);
+                }
+                ~Iterator(){}
+            };
 
 
 int main(){
@@ -193,9 +235,8 @@ int main(){
     lista.insertBegin(13);
     lista.insertEnd(100);
     
-    
-    
-    
+    LinkedList<int> lista2=lista;
+
     cout<<lista<<endl<<endl;
     cout<<"Usando un for para iterar sobre la lista mediante indices"<<endl;
     for (int i=0;i<lista.getLongitud();i++){
@@ -220,7 +261,19 @@ int main(){
     cout<<lista<<endl;
     cout<<"Su nueva longitud seria"<<lista.getLongitud()<<endl;
     
+    cout<<"Probando iterador "<<endl;
+    //for(Iterator<int>i=lista.begin();i!=lista.end()->getNext();i++){
+        //cout<<*i<<endl;
+    //}
+    //Node<int>*aux=lista.getHead();
+    Iterator<int> iterador;
+    for(iterador=lista.begin();iterador!=nullptr;iterador++){
+        cout<<iterador;
+    }
+    cout<<"Aca termina de probarse el code"<<endl;
 
+
+    //cout<<lista2<<endl;
     getch();
     return 0;
 }
