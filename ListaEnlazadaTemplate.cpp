@@ -185,21 +185,30 @@ class LinkedList{
                 Iterator(const Iterator<I>&o){//constructor q copia un objeto Node * a un objeto iterator
                     this->iterador=o.iterador;
                 }
-                Iterator operator =(Node<I>*o){//constructor de movimiento
+                Iterator <I>operator =(Node<I>*o){//constructor de movimiento
                     this->iterador=o;
                     return *this;
                 }
-                Iterator operator =(const Iterator<I>&o){//constructor de movimiento
+                Iterator<I> operator =(const Iterator<I>&o){//constructor de movimiento
                     this->iterador=o.iterador;
                     return *this;
                 }
-                
+                /*
                 Iterator<I> operator++(){
-                    this->iterador=this->iterador->getNext();   
+                    if(this->iterador){
+                        this->iterador=this->iterador->getNext();   
+                    }
+                    
                     Iterator<I>aux(this->iterador);
-                    return aux;
+                    return this->iterador;
                 }
-                
+               */ 
+                Iterator <I>&operator++(){
+                    if(this->iterador){
+                        this->iterador = this->iterador->getNext();
+                    }
+                    return *this;
+                }
                 Iterator<I> operator +(int i){
                     for(int j=0;j<i;j++){
                        this->iterador=this->iterador->getNext();
@@ -267,7 +276,7 @@ int main(){
     //}
     //Node<int>*aux=lista.getHead();
     Iterator<int> iterador;
-    for(iterador=lista.begin();iterador!=nullptr;iterador++){
+    for(iterador=lista.begin();iterador!=nullptr;++iterador){
         cout<<iterador;
     }
     cout<<"Aca termina de probarse el code"<<endl;
