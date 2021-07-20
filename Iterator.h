@@ -67,7 +67,7 @@ Iterator<I> Iterator<I>::operator =(const Iterator<I>&&o){//asignacion de movimi
 }
 
 template<typename I>
-Iterator <I>& Iterator<I>::operator++(int){
+Iterator <I>Iterator<I>::operator++(int){
     this->iterador = this->iterador->getNext();
     return *this;
 }
