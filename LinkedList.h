@@ -8,13 +8,13 @@ class LinkedList{
     public:
         //constructores
         LinkedList();
-        LinkedList(G value);
-        LinkedList(const LinkedList <G>&o);
-        LinkedList(LinkedList<G> &&o);
+        LinkedList(G);
+        LinkedList(const LinkedList <G>&);
+        LinkedList(LinkedList<G> &&);
 
-        LinkedList<G>& operator=(const LinkedList<G> &o);
+        LinkedList<G>& operator=(const LinkedList<G> &);
 
-        LinkedList<G>& operator=(LinkedList<G> &&o);
+        LinkedList<G>& operator=(LinkedList<G> &&);
 
 
         int getLongitud()const;
@@ -22,12 +22,12 @@ class LinkedList{
 
         Node<G>*begin();
         Node<G>*end();
-        Node <G>* operator [](int pos);
-        void insertBegin(G value);
-        void insertEnd(G value);
+        Node <G>* operator [](int);
+        void insertBegin(G);
+        void insertEnd(G);
         void eliminarBegin();
         void eliminarEnd();
-        void eliminar(int position);
+        void eliminar(int);
         bool vacio();
         ~LinkedList();
 
