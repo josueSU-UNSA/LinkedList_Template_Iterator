@@ -1,6 +1,5 @@
 #include<iostream>
 #include<list>
-#include<conio.h>
 #include "Iterator.h"
 using namespace std;
 int main(){
@@ -58,8 +57,5 @@ int main(){
     lista.~LinkedList();
     cout<<"Despues de invocar al destructor: "<<endl;
     (lista.vacio())?cout<<"La lista esta vacia "<<endl:cout<<"La lista no esta vacia "<<endl;
-    
-    
-    getch();
     return 0;
 }
