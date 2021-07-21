@@ -6,21 +6,23 @@ class Iterator{
         Node<I>*iterador;
     public:
         Iterator();
-        Iterator(Node<I> *o);
-        Iterator(const Iterator<I>&o);
+        Iterator(Node<I> *);
+        Iterator(const Iterator<I>&);
 
-        Iterator(Iterator<I> &&o);
+        Iterator(Iterator<I> &&);
 
-        Iterator <I>operator =(Node<I>*o);
+        Iterator <I>operator =(Node<I>*);
 
-        Iterator<I> operator =(const Iterator<I>&o);
+        Iterator<I> operator =(const Iterator<I>&);
 
-        Iterator<I> operator =(const Iterator<I>&&o);
+        Iterator<I> operator =(const Iterator<I>&&);
 
-        Iterator <I>operator++(int);
-        Iterator<I> operator +(int i);
+        Iterator <I>operator++(int);//forma de postfijo
+        Iterator <I>&operator++();
+        Iterator<I> operator +(int);
+        Iterator<I> operator +=(int);
         I operator*();
-        bool operator!=(Node<I>*o);
+        bool operator!=(Node<I>*);
         ~Iterator();
         friend std::ostream& operator <<(std::ostream &salida1,Iterator<I>& i){
             salida1<<*i<<std::endl;
@@ -67,9 +69,17 @@ Iterator<I> Iterator<I>::operator =(const Iterator<I>&&o){//asignacion de movimi
 }
 
 template<typename I>
-Iterator <I>Iterator<I>::operator++(int){
+Iterator <I> Iterator<I>::operator++(int){//forma de postfijo
     this->iterador = this->iterador->getNext();
-    return *this;
+    Iterator <I>aux(this->iterador);
+    return aux; 
+}
+
+template<typename I>
+Iterator <I>& Iterator<I>::operator++(){//forma de prefijo
+    this->iterador = this->iterador->getNext();
+    Iterator <I>aux(this->iterador);
+    return *this; 
 }
 
 template<typename I>
@@ -80,7 +90,14 @@ Iterator<I> Iterator<I>::operator +(int i){
     Iterator <I>aux(this->iterador);
     return aux;  
 }
-
+template<typename I>
+Iterator<I> Iterator<I>::operator +=(int i){
+    for(int j=0;j<i;j++){
+        this->iterador=this->iterador->getNext();
+    }
+    Iterator <I>aux(this->iterador);
+    return aux; 
+}
 template<typename I>
 I Iterator<I>::operator*(){
     return this->iterador->getContent();
