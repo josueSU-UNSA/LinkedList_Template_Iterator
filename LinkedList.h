@@ -5,6 +5,7 @@ class LinkedList{
     private:
         int longitud;
         Node <G>*head;
+        
     public:
         //constructores
         LinkedList();
@@ -23,6 +24,7 @@ class LinkedList{
         Node<G>*begin();
         Node<G>*end();
         Node <G>* operator [](int);
+        void setHead(Node<G>*);
         void insertBegin(G);
         void insertEnd(G);
         void eliminarBegin();
@@ -30,7 +32,6 @@ class LinkedList{
         void eliminar(int);
         bool vacio();
         ~LinkedList();
-
         friend std::ostream& operator <<(std::ostream &salida1,LinkedList<G>& C){
             Node<G>* actual=C.getHead();
             salida1<<"[ ";
@@ -40,9 +41,10 @@ class LinkedList{
             }
             salida1<<" ]";
             return salida1;
-        }
-
+        }       
 };
+
+
 template<typename G>
 LinkedList<G>::LinkedList(){
     this->longitud=0;
@@ -77,20 +79,12 @@ LinkedList<G>::LinkedList(LinkedList<G> &&o){//constructor de movimiento
         this->insertEnd(iterador->getContent());
         iterador=iterador->getNext();
     }
+    o.head=nullptr;
 }
 
 template<typename G>
 LinkedList<G> &LinkedList<G>::operator=(const LinkedList<G> &o){//asignacion de copia
-    this->longitud=0;
-    this->head=nullptr;
-    Node<G>*iterador=o.head;
-    while (iterador!=nullptr){
-        this->insertEnd(iterador->getContent());
-        iterador=iterador->getNext();
-    } 
-}
-template<typename G>
-LinkedList<G>& LinkedList<G>:: operator=(LinkedList<G> &&o){//asignacion de movimiento
+    this->~LinkedList();
     this->longitud=0;
     this->head=nullptr;
     Node<G>*iterador=o.head;
@@ -98,6 +92,21 @@ LinkedList<G>& LinkedList<G>:: operator=(LinkedList<G> &&o){//asignacion de movi
         this->insertEnd(iterador->getContent());
         iterador=iterador->getNext();
     }
+    this->longitud=o.longitud;
+    return *this;
+
+}
+template<typename G>
+LinkedList<G>& LinkedList<G>:: operator=(LinkedList<G> &&o){//asignacion de movimiento
+    this->~LinkedList();
+    this->longitud=0;
+    this->head=nullptr;
+    Node<G>*iterador=o.head;
+    while (iterador!=nullptr){
+        this->insertEnd(iterador->getContent());
+        iterador=iterador->getNext();
+    }
+    o.~LinkedList();
 }
 template<typename G>
 int LinkedList<G>::getLongitud()const{
@@ -139,6 +148,10 @@ Node <G>* LinkedList<G>::operator [](int pos){
         }
         return auxiliarIterador;
     }
+}
+template<typename G>
+void LinkedList<G>::setHead(Node<G>*h){
+    this->head=h;
 }
 
 template<typename G>
