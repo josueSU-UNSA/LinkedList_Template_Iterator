@@ -10,7 +10,7 @@ class Iterator{
         Iterator(const Iterator<I>&);
 
         Iterator(Iterator<I> &&);
-
+        void setIterator(Node<I>*);
         Iterator <I>operator =(Node<I>*);
 
         Iterator<I> operator =(const Iterator<I>&);
@@ -48,10 +48,15 @@ Iterator<I>::Iterator(const Iterator<I>&o){//constructor q copia un objeto Node 
 template<typename I>
 Iterator<I>::Iterator(Iterator<I> &&o){//constructor de movimiento
     this->iterador=o.iterador;
+    o.setIterator(nullptr);
 }
-
+template<typename I>
+void Iterator<I>::setIterator(Node<I>*i){
+    this->iterador=i;
+}
 template<typename I>
 Iterator <I> Iterator<I>::operator =(Node<I>*o){//operador de asignacion
+    delete this->iterador;
     this->iterador=o;
     return *this;
 }
@@ -64,7 +69,10 @@ Iterator<I> Iterator<I>::operator =(const Iterator<I>&o){// operador de asignaci
 
 template<typename I>
 Iterator<I> Iterator<I>::operator =(const Iterator<I>&&o){//asignacion de movimiento
+    delete this->iterador;
     this->iterador=o.iterador;
+    return *this;
+    delete o;
     return *this;
 }
 
