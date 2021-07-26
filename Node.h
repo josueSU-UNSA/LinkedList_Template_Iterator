@@ -18,7 +18,7 @@ class Node{
         friend std::ostream& operator <<(std::ostream &salida1,const Node<T>& C){
             salida1<<C.getContent();
             return salida1;
-        }            
+        }           
 };
 template<typename T>
 Node<T>::Node(T _content){ 
@@ -42,18 +42,26 @@ template<typename T>
 Node<T>::Node(Node<T> &&obj){//constructor de movimiento
     this->next=obj.next;
     this->content=obj.content; 
+    obj.setNext(nullptr);
+    obj.setContent(0);
 }
 
 template<typename T>
 Node<T>&Node<T>:: operator=(const Node<T> &obj){//asignacion de copia
+    this->next=nullptr;
     this->next=obj.next;
-    this->content=obj.content; 
+    this->content=obj.content;
+    return *this;
 }
 
 template<typename T>
 Node<T>& Node<T>::operator=(Node<T> &&obj){//asignacion de movimiento
+    this->next=nullptr;
     this->next=obj.next;
     this->content=obj.content; 
+    obj.setNext(nullptr);
+    obj.setContent(0);
+    return *this;
 }
 
 template<typename T>
